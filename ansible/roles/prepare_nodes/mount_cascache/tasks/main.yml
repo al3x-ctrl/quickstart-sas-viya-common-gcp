@@ -13,7 +13,7 @@
       drives=""
       drive_count=0
       found=""
-      nvm_drives=$(lsblk  -d -n --output NAME | grep -v sda | grep -v sdb | grep -v sdc | grep -v sr0 | grep -v fd0)
+      nvm_drives=$(lsblk  -d -n --output NAME | grep nvm || :)
       for device_name in $nvm_drives; do
         device_path="/dev/$device_name"
         if [ -b "$device_path" ]; then
@@ -44,7 +44,7 @@
         # find the nvm drive devices
         drives=""
         drive_count=0
-        nvm_drives=$(lsblk  -d -n --output NAME | grep -v sda | grep -v sdb | grep -v sdc | grep -v sr0 | grep -v fd0)
+        nvm_drives=$(lsblk  -d -n --output NAME | grep nvm || :)
         for device_name in $nvm_drives; do
           device_path="/dev/$device_name"
           if [ -b "$device_path" ]; then
@@ -61,7 +61,7 @@
           # find the drive devices
           drives=""
           drive_count=0
-          nvm_drives=$(lsblk  -d -n --output NAME | grep -v sda | grep -v sdb | grep -v sdc | grep -v sr0 | grep -v fd0)
+          nvm_drives=$(lsblk  -d -n --output NAME | grep nvm)
           for device_name in $nvm_drives; do
             device_path="/dev/$device_name"
             if [ -b "$device_path" ]; then
@@ -115,10 +115,7 @@
   - name: ephemeral disks service
     service:
       name: disks_ephemeral
+      enabled: yes
       state: started
 
   when: ephemeral_drives_exist.stdout == "yes"
-
-
-
-
