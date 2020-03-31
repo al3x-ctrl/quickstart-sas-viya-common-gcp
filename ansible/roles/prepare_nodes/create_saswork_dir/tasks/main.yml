@@ -114,7 +114,7 @@
     command: systemctl daemon-reload
   - name: saswork ephemeral disks service
     service:
-      name: sas_work_disks_ephemeral
+      name: saswork_disks_ephemeral
       enabled: yes
       state: started
 
